@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tunify</title>
+
+    <style>
+        body {
+            background-image: url('https://raw.githubusercontent.com/dj4christ/RachelMusicSite/master/bgpic.png');
+            background-size: cover;
+            background-color: black;
+        }
+    </style>
+</head>
+<body bgcolor="black">
+
+    <h1 style="-webkit-text-fill-color: white; background: grey; padding: 1%;" align="center">Tunify</h1>
+    <section id="section1" style="border: 2px solid black; background-color: rgba(11, 93, 216, 0.4); width: 40%; height: 500px;; overflow-y: auto; margin: 0 auto; float: left;">
+    </section>
+    <section id="section2" style="border: 2px solid black; align-items: center; justify-content: center; display: flex; background-color: rgba(11, 93, 216, 0.4); width: 40%; height: 500px; overflow-y: auto; margin: 0 auto; float: right;"
+>
+        <h1 id="title" style="-webkit-text-fill-color: rgb(0, 0, 0); font-size: 50px;"></h1>
+    </section>
+
+    
+    
+    <script>
+        function findPlayingAudio() {
+            var audioElements = document.getElementsByTagName("audio");
+            for (var i = 0; i < audioElements.length; i++) {
+                if (!audioElements[i].paused) {
+                    return audioElements[i].id;
+                }
+            }
+            return "Tunify";
+        }
+
+        function createAudioElement(src, i) {
+            var audioElement = document.createElement('audio');
+            audioElement.setAttribute('src', src);
+            audioElement.setAttribute('controls', '');
+            audioElement.style.display = 'block';
+            audioElement.style.margin = 'auto';
+            audioElement.style.marginTop = '20px';
+            audioElement.style.marginBottom = '20px';
+
+            var url = 'https://raw.githubusercontent.com/dj4christ/RachelMusicSite/master/audio' + String(i) + ".txt";
+            fetch(url)
+                .then(response => response.text())
+                .then(text => {
+                    audioElement.id = text;
+                });
+
+            return audioElement
+            
+        }
+
+
+        function checkAudioExists(url) {
+            return fetch(url)
+                .then(response => response.ok)
+                .catch(error => false);
+        }
+
+        async function createAndAppendAudioElements() {
+            var audioSection = document.getElementById("section1");
+            for (var i = 0; i < 20; i++) {
+                var audioUrl = 'https://raw.githubusercontent.com/dj4christ/RachelMusicSite/master/audio' + i + '.mp3';
+                if (await checkAudioExists(audioUrl)) {
+                    var audioElement = createAudioElement(audioUrl, i);
+                    audioSection.appendChild(audioElement);
+                }
+            }
+        }
+
+
+
+
+        createAndAppendAudioElements();
+        var titleElement = document.getElementById('title')
+        setInterval(function() {
+            var nowPlaying = findPlayingAudio()
+            titleElement.textContent = nowPlaying
+        }, 1000);
+    </script>
+
+</body>
+</html>
