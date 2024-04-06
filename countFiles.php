@@ -1,5 +1,5 @@
 <?php
-    $directory = '/path/to/your/folder'; // Replace this with the path to your folder
+    $directory = 'https://raw.githubusercontent.com/dj4christ/RachelMusicSite/master/'; // Replace this with the path to your folder
 
     if (is_dir($directory)){
         $files = scandir($directory);
