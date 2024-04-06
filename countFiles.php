@@ -8,8 +8,8 @@ if ($html !== false) {
 
     // Count the number of matches
     $num_audio_files = count($matches[1]);
-    echo "Number of audio files: $num_audio_files";
+    echo "<h1>Number of audio files: $num_audio_files</h1>";
 } else {
-    echo "Failed to fetch URL: $url";
+    echo "<h1>Failed to fetch URL: $url</h1>";
 }
 ?>
